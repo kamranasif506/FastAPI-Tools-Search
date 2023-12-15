@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
@@ -12,6 +13,15 @@ def dummy_search_function(user_prompt):
         {"tool_name": "Tool 5", "description": f"Description for {user_prompt} - 5", "link": "http://link5.com"}
     ]
     return data
+
+# Enable CORS
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Change this to the actual domain of your frontend
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # FastAPI endpoint for search
 @app.get("/search")
